@@ -58,9 +58,8 @@ FROM Emp JOIN Career USING(EmpNo) JOIN Job USING(JobNo) JOIN Dept USING(DeptNo);
 
 -- Task 5.2
 -- Требуется выполнить скользящую агрегацию, например, найти скользящую сумму заработных плат. Вычислять сумму для каждого интервала в 90 день, начиная с даты приема на работу (поле STARTDATE таблицы CAREER) первого сотрудника, чтобы увидеть динамику изменения расходов для каждого 90-дневного периода между датами приема на работу первого и последнего сотрудника.
-SELECT StartDate, SalValue, SUM(SalValue) OVER(PARTITION BY (RANGE BETWEEN 90 PRECEDING AND CURRENT ROW) ORDER BY StartDate) Spending_Pattern  
-  
-FROM Career JOIN Salary USING(EmpNo) ;
+SELECT StartDate, SalValue, SUM(SalValue) OVER(ORDER BY StartDate RANGE BETWEEN 90 PRECEDING AND CURRENT ROW) Spending_Pattern    
+FROM Career JOIN Salary USING(EmpNo);
 
 -- Task 5.3
 -- Требуется вывести множество числовых значений, представив каждое из них как долю от целого в процентном выражении. Например, требуется получить результирующее множество, отражающее распределение заработных плат по должностям, чтобы можно было увидеть, какая из позиций JOB обходится компании дороже всего.
